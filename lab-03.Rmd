@@ -56,11 +56,33 @@ ggplot(nobel_living_science, aes(y = country_us)) +
 ### Exercise 4
 
 ...
+```{r}
+nobel_living <- nobel_living %>%
+  mutate(
+    born_us = if_else(born_country == "USA", "Born USA", "Born Other")
+  )
+nobel_living_science_born <- nobel_living %>%
+  filter(category %in% c("Physics", "Medicine", "Chemistry", "Economics"))
+```
 
 ### Exercise 5
 
 ...
+```{r}
+ggplot(nobel_living_science_born, aes(y = country_us, fill = born_us)) +
+  geom_bar() +
+  facet_grid(~ category) +
+  labs(title = "Are they USA-based/born?", x = "Country", y = "Counts") +
+  theme_minimal()
+```
 
 ### Exercise 6
+```{r}
+outsiders <- nobel_living %>%
+  filter(born_country != "USA"
+  )
+count(outsiders, born_country, wt = NULL, sort = TRUE)
+```
+
 
 ...
